@@ -1,0 +1,75 @@
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine;
+
+#ROOTNAMESPACEBEGIN#
+    public class #SCRIPTNAME# : MonoBehaviour
+    {
+        #region FIELDS INSPECTOR
+        #endregion
+
+        #region FIELDS PRIVATE
+        #endregion
+
+        #region PROPERTIES
+        #endregion
+
+        #region EVENTS
+        #endregion
+
+        #region UNITY CALLBACKS
+        private void Awake()
+        {
+            #NOTRIM#
+        }
+
+        private void Start()
+        {
+            #NOTRIM#
+        }
+
+        private void Update()
+        {
+            #NOTRIM#
+        }
+
+        private void FixedUpdate()
+        {
+            #NOTRIM#
+        }
+        #endregion
+
+        #region METHODS PRIVATE
+        #endregion
+
+        #region METHODS PUBLIC
+        #endregion
+
+        #region COROUTINES
+        #endregion
+
+        #region INSPECTOR INFORMATIONS
+        [CustomEditor(typeof(#SCRIPTNAME#))]
+        public class #SCRIPTNAME#Editor : Editor
+        {
+            private #SCRIPTNAME# _target;
+
+            void OnEnable()
+            {
+                _target = target as #SCRIPTNAME#;
+            }
+
+            public override void OnInspectorGUI()
+            {
+                base.OnInspectorGUI();
+
+                GUILayout.Space(0);
+                GUILayout.Label("Inspector informations");
+            }
+        }
+        #endregion
+    }
+#ROOTNAMESPACEEND#

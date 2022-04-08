@@ -7,10 +7,11 @@ namespace Scrambler
 {
     public class Dictionary
     {
+        #region FIELDS PRIVATE
         private List<string> _words;
         private List<WordIndex> _wordsIndexes;
-        
-        private int[] _countLetterToIndex = new int[] {3, 4, 5, 6, 7};
+
+        private int[] _countLetterToIndex = new int[] { 3, 4, 5, 6, 7 };
 
         public Dictionary(Language language = Language.English)
         {
@@ -30,7 +31,9 @@ namespace Scrambler
 
             InitializationIndex();
         }
+        #endregion
 
+        #region METHODS PRIVATE
         private void InitializationIndex()
         {
             _wordsIndexes = new List<WordIndex>();
@@ -39,12 +42,14 @@ namespace Scrambler
                 var wordIndex = new WordIndex();
                 wordIndex.NumberLetter = count;
                 wordIndex.BeginIndex = _words.FindIndex(i => i.Length == count);
-                wordIndex.EndhIndex= _words.FindLastIndex(i => i.Length == count);
+                wordIndex.EndhIndex = _words.FindLastIndex(i => i.Length == count);
 
                 _wordsIndexes.Add(wordIndex);
             }
         }
+        #endregion
 
+        #region METHODS PUBLIC
         public bool TryWords(string word)
         {
             var wordIndex = _wordsIndexes.Find(i => i.NumberLetter == word.Length);
@@ -63,6 +68,7 @@ namespace Scrambler
             var wordRange = _words.GetRange(wordIndex.BeginIndex, (wordIndex.EndhIndex + 1) - wordIndex.BeginIndex);
             return wordRange[Random.Range(0, wordRange.Count)];
         }
+        #endregion
     }
 
     public struct WordIndex

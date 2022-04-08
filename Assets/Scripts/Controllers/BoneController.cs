@@ -10,6 +10,7 @@ namespace Scrambler
     [SelectionBase]
     public class BoneController : MonoBehaviour, IPointerClickHandler
     {
+        #region FIELDS INSPECTOR
         [SerializeField] private GameObject _body;
         [SerializeField] private TextMeshPro _text;
         [SerializeField] private Material _enabledMaterial;
@@ -19,7 +20,9 @@ namespace Scrambler
         [Space(10)]
         [SerializeField] private ParticleSystem _fireworksPrefab;
         [SerializeField] private ParticleSystem _explosionPrefab;
+        #endregion
 
+        #region FIELDS PRIVATE
         private string _char;
         private string _word;
         private bool _isActive;
@@ -28,15 +31,17 @@ namespace Scrambler
         private BoneController _lastBone;
         private List<BoneController> _column;
         private MeshRenderer _meshRenderer;
+        #endregion
 
+        #region PROPERTIES
         public string Char
-        { 
-            get { return _char; } 
-            set 
-            { 
+        {
+            get { return _char; }
+            set
+            {
                 _char = value;
                 _text.text = _char;
-            } 
+            }
         }
         public string Word
         {
@@ -81,7 +86,9 @@ namespace Scrambler
                 }
             }
         }
+        #endregion
 
+        #region UNITY CALLBACKS
         private void Start()
         {
             _meshRenderer = GetComponentInChildren<MeshRenderer>();
@@ -95,20 +102,12 @@ namespace Scrambler
         private void OnDestroy()
         {
             _column.Remove(this);
-            if(_lastBone != null)
+            if (_lastBone != null)
             {
                 _lastBone.Active = true;
             }
 
             transform.DOKill();
-        }
-
-        private void CheckLast()
-        {
-            if(_column[_column.Count - 1] == this)
-            {
-                Active = true;
-            }
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -119,7 +118,19 @@ namespace Scrambler
             transform.DOScaleX(0.8f, 0.1f).SetLoops(2, LoopType.Yoyo);
             transform.DOScaleY(0.8f, 0.1f).SetLoops(2, LoopType.Yoyo).OnComplete(() => GameManager.SetBones(this));
         }
+        #endregion
 
+        #region METHODS PRIVATE
+        private void CheckLast()
+        {
+            if (_column[_column.Count - 1] == this)
+            {
+                Active = true;
+            }
+        }
+        #endregion
+
+        #region METHODS PUBLIC
         public void SetPosition(Vector3 position)
         {
             transform.position += -Vector3.forward;
@@ -158,5 +169,6 @@ namespace Scrambler
             Instantiate(_explosionPrefab, transform.position, transform.rotation);
             Destroy(gameObject);
         }
+        #endregion
     }
 }

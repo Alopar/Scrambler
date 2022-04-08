@@ -6,11 +6,14 @@ namespace Scrambler
 {
     public class CameraController : MonoBehaviour
     {
+        #region FIELDS PRIVATE
         private const float _baseResolutionRatio = 1280f / 720f;
         private const float _baseOrthographicSize = 5f;
 
         private Camera _camera;
+        #endregion
 
+        #region UNITY CALLBACKS
         private void Awake()
         {
             _camera = Camera.main;
@@ -23,6 +26,9 @@ namespace Scrambler
             _camera.orthographicSize = CalculateOrthographicSize();
         }
 #endif
+        #endregion
+
+        #region METHODS PRIVATE
         private float CalculateOrthographicSize()
         {
             var orthographicSize = _baseOrthographicSize;
@@ -37,5 +43,6 @@ namespace Scrambler
 
             return (float)System.Math.Round(orthographicSize, 1);
         }
+        #endregion
     }
 }

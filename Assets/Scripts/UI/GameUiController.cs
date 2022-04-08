@@ -9,8 +9,9 @@ using DG.Tweening;
 
 namespace Scrambler
 {
-    public class UiManager : MonoBehaviour
+    public class GameUiController : MonoBehaviour
     {
+        #region FIELDS INSPECTOR
         [Header("HUD")]
         [SerializeField] private GameObject _hudPanel;
         [SerializeField] private TextMeshProUGUI _hudScore;
@@ -20,7 +21,9 @@ namespace Scrambler
         [SerializeField] private TextMeshProUGUI _winBestScore;
         [SerializeField] private TextMeshProUGUI _winCurrentScore;
         [SerializeField] private ParticleSystem[] _confettis;
+        #endregion
 
+        #region UNITY CALLBACKS
         private void Start()
         {
             GameManager.OnScoreChange += ScoreChangeHandler;
@@ -32,7 +35,9 @@ namespace Scrambler
             GameManager.OnScoreChange -= ScoreChangeHandler;
             GameManager.OnGameStateChange -= GameStateChangeHandler;
         }
+        #endregion
 
+        #region METHODS PRIVATE
         private void ScoreChangeHandler(int score)
         {
             DOVirtual.Int(Int32.Parse(_hudScore.text), score, 1f, (v) => {
@@ -43,7 +48,7 @@ namespace Scrambler
 
         private void GameStateChangeHandler(GameState gameState)
         {
-            if(gameState == GameState.Win)
+            if (gameState == GameState.Win)
             {
                 _hudPanel.GetComponentsInChildren<Button>().ToList().ForEach(i => i.interactable = false);
                 ShowWinPanel();
@@ -59,7 +64,9 @@ namespace Scrambler
 
             StartCoroutine(LaunchFireworks());
         }
+        #endregion
 
+        #region METHODS PUBLIC
         public void ReloadLevel()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -85,7 +92,9 @@ namespace Scrambler
 
             GameManager.CheckWord();
         }
+        #endregion
 
+        #region COROUTINES
         IEnumerator LaunchFireworks()
         {
             foreach (var confetti in _confettis)
@@ -94,5 +103,6 @@ namespace Scrambler
                 confetti.Play();
             }
         }
+        #endregion
     }
 }
